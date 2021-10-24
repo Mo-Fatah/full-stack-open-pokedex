@@ -28,3 +28,4 @@ jobs:
           heroku_email: "mohamedabdelfatah2027@gmail.com"
           healthcheck: "https://fast-wave-75532.herokuapp.com/health"
           checkstring: "ok"
+          rollbackonhealthcheckfailed: true
