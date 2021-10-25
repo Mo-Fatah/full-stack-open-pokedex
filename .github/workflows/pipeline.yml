@@ -18,16 +18,16 @@ jobs:
           node-version: '12.x'
       
       - name: npm install
-      run: npm install
+        run: npm install
       
       - name: Lint
-      run: npm run eslint
+        run: npm run eslint
       
       - name: Build
         run: npm run build
       
       - name: Test
-      run: npm run test
+        run: npm run test
 
       - name: Deploy to Heroku
         if: ${{ github.event_name == 'push' }} 
