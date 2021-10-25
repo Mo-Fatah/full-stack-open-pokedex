@@ -16,16 +16,21 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      
       - name: npm install
-        run: npm install
+      run: npm install
+      
       - name: Lint
-        run: npm run eslint
+      run: npm run eslint
+      
       - name: Build
         run: npm run build
+      
       - name: Test
-        run: npm run test
+      run: npm run test
 
-      - if: ${{ github.event_name == 'push' }} 
+      - name: Deploy to Heroku
+        if: ${{ github.event_name == 'push' }} 
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -34,3 +39,11 @@ jobs:
           healthcheck: "https://fast-wave-75532.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        if: ${{github.event_name == 'push'}}
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
